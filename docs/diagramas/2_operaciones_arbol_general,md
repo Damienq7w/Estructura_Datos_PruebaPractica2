@@ -1,0 +1,71 @@
+# Operaciones del árbol general
+
+> **Responsable:** Joel Tisalema · **Rama:** `feature/joel-operaciones-arbol-general`
+>
+> **Para qué:** altura en aristas, eliminación segura y transformación hijo izquierdo / hermano derecho.
+
+## Flujo de altura(nodo) — O(N)
+
+```mermaid
+flowchart TD
+    A(["altura(nodo)"]) --> B{"nodo == null"}
+    B -- Sí --> C(["-1: caso base"])
+    B -- No --> D["mayor = -1"]
+    D --> E{"quedan hijos"}
+    E -- Sí --> F["mayor = max(mayor, altura(hijo))"]
+    F --> E
+    E -- No --> G(["1 + mayor"])
+```
+
+Una hoja devuelve `1 + (-1) = 0`. Con los datos: UTA → FISEI → SOFTWARE → 3A da **altura 3**.
+
+## Flujo de eliminar(codigo) — eliminación segura
+
+```mermaid
+flowchart TD
+    A(["eliminar(codigo)"]) --> B{"árbol vacío, código vacío o es la raíz"}
+    B -- Sí --> X1(["false: UTA no se elimina"])
+    B -- No --> C["padre = buscarPadre(raiz, codigo)"]
+    C --> D{"padre == null"}
+    D -- Sí --> X2(["false: no existe"])
+    D -- No --> E{"hijo.esHoja()"}
+    E -- No --> X3(["false: tiene descendientes"])
+    E -- Sí --> F["padre.eliminarHijo(hijo)"]
+    F --> G(["true"])
+```
+
+## Transformación general → binario
+
+Regla: **izquierdo = primer hijo**, **derecho = siguiente hermano**.
+
+```mermaid
+flowchart TD
+    UTA --> |izq| FISEI
+    FISEI --> |der| FCHE
+    FCHE --> |der| FCS
+    FISEI --> |izq| SOFTWARE
+    SOFTWARE --> |der| TI
+    SOFTWARE --> |izq| 3A
+    3A --> |der| 3B
+    TI --> |izq| 4A
+```
+
+Interpretación errónea a evitar: en el binario resultante, FCHE **no** es hijo de FISEI; es su hermano. La equivalencia se conserva porque desde cada nodo, "ir a la izquierda y luego todo a la derecha" recorre exactamente sus hijos originales en orden.
+
+## Secuencia de transformarABinario()
+
+```mermaid
+sequenceDiagram
+    participant M as Main
+    participant A as ArbolGeneral
+    participant N as NodoUnidad
+    M->>A: transformarABinario()
+    A->>A: binaria = new NodoBinarioUnidad(UTA)
+    A->>N: raiz.getHijos()
+    A->>A: convertir(hijos, 0)
+    loop cada nodo
+        A->>A: izq = convertir(actual.hijos, 0)
+        A->>A: der = convertir(hermanos, i + 1)
+    end
+    A-->>M: raíz binaria (el árbol general no cambia)
+```
