@@ -97,4 +97,63 @@ public class ArbolEstudiantes {
         }
         return 1 + contar(nodo.getIzquierdo()) + contar(nodo.getDerecho());
     }
+
+    /** Recorrido indicado. Árbol vacío = lista vacía. O(n). */
+    public ArrayList<Estudiante> recorrer(TipoRecorrido tipo) {
+        if (tipo == null) {
+            throw new IllegalArgumentException("Debe indicar un tipo de recorrido.");
+        }
+        ArrayList<Estudiante> resultado = new ArrayList<>();
+        switch (tipo) {
+            case PREORDEN:
+                preorden(raiz, resultado);
+                break;
+            case INORDEN:
+                inorden(raiz, resultado);
+                break;
+            default:
+                posorden(raiz, resultado);
+                break;
+        }
+        return resultado;
+    }
+
+    /** Solo las matrículas del recorrido (útil para mostrar y para las pruebas). */
+    public ArrayList<Integer> recorrerMatriculas(TipoRecorrido tipo) {
+        ArrayList<Integer> matriculas = new ArrayList<>();
+        for (Estudiante e : recorrer(tipo)) {
+            matriculas.add(e.getMatricula());
+        }
+        return matriculas;
+    }
+
+    // Preorden: visita, izquierdo, derecho. Caso base: nodo nulo.
+    private void preorden(NodoEstudiante nodo, ArrayList<Estudiante> lista) {
+        if (nodo == null) {
+            return;
+        }
+        lista.add(nodo.getDato());
+        preorden(nodo.getIzquierdo(), lista);
+        preorden(nodo.getDerecho(), lista);
+    }
+
+    // Inorden: izquierdo, visita, derecho. En un ABB sale ordenado.
+    private void inorden(NodoEstudiante nodo, ArrayList<Estudiante> lista) {
+        if (nodo == null) {
+            return;
+        }
+        inorden(nodo.getIzquierdo(), lista);
+        lista.add(nodo.getDato());
+        inorden(nodo.getDerecho(), lista);
+    }
+
+    // Posorden: izquierdo, derecho, visita. La raíz sale al final.
+    private void posorden(NodoEstudiante nodo, ArrayList<Estudiante> lista) {
+        if (nodo == null) {
+            return;
+        }
+        posorden(nodo.getIzquierdo(), lista);
+        posorden(nodo.getDerecho(), lista);
+        lista.add(nodo.getDato());
+    }
 }
