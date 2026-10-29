@@ -2,7 +2,6 @@ package estructuras;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import modelo.UnidadAcademica;
 
 /** Nodo del árbol general: un dato y una lista con cualquier cantidad de hijos. */
@@ -12,37 +11,45 @@ public class NodoUnidad {
     private final ArrayList<NodoUnidad> hijos;
 
     public NodoUnidad(UnidadAcademica dato) {
-        throw new UnsupportedOperationException("Pendiente: NodoUnidad - Damian Cunalata");
+        if (dato == null) {
+            throw new IllegalArgumentException("El nodo necesita una unidad academica.");
+        }
+        this.dato = dato;
+        this.hijos = new ArrayList<>();
     }
 
     public UnidadAcademica getDato() {
-        throw new UnsupportedOperationException("Pendiente: getDato - Damian Cunalata");
+        return dato;
     }
 
     public String getCodigo() {
-        throw new UnsupportedOperationException("Pendiente: getCodigo - Damian Cunalata");
+        return dato.getCodigo();
     }
 
     /** Lista de solo lectura: los hijos se cambian con agregarHijo / eliminarHijo. */
     public List<NodoUnidad> getHijos() {
-        throw new UnsupportedOperationException("Pendiente: getHijos - Damian Cunalata");
+        return java.util.Collections.unmodifiableList(hijos);
     }
 
     /** Agrega el hijo solo si su tipo es el inmediatamente inferior (regla padre–hijo). */
     public boolean agregarHijo(NodoUnidad hijo) {
-        throw new UnsupportedOperationException("Pendiente: agregarHijo - Damian Cunalata");
+        if (hijo == null || !dato.getTipo().puedeTenerHijo(hijo.getDato().getTipo())) {
+            return false;
+        }
+        hijos.add(hijo);
+        return true;
     }
 
     public boolean eliminarHijo(NodoUnidad hijo) {
-        throw new UnsupportedOperationException("Pendiente: eliminarHijo - Damian Cunalata");
+        return hijos.remove(hijo);
     }
 
     public boolean esHoja() {
-        throw new UnsupportedOperationException("Pendiente: esHoja - Damian Cunalata");
+        return hijos.isEmpty();
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Pendiente: toString - Damian Cunalata");
+        return dato.toString();
     }
 }

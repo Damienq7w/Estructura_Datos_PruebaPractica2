@@ -1,7 +1,6 @@
 package estructuras;
 
 import java.util.List;
-
 import modelo.TipoUnidad;
 import modelo.UnidadAcademica;
 
@@ -42,13 +41,21 @@ public class ArbolGeneral {
             return false;
         }
         if (existe(unidad.getCodigo())) {
+
             return false; // codigo unico
+
+            return false; // código único
+
         }
         NodoUnidad padre = buscar(codigoPadre);
         if (padre == null) {
             return false; // padre inexistente
         }
+
         return padre.agregarHijo(new NodoUnidad(unidad)); // valida la jerarquia
+
+        return padre.agregarHijo(new NodoUnidad(unidad)); // valida la jerarquía
+
     }
 
     /** Busca por codigo (sin importar espacios ni mayusculas). Devuelve null si no existe. */

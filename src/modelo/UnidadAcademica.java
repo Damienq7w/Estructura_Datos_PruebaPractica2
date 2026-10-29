@@ -11,36 +11,47 @@ public class UnidadAcademica {
     private final TipoUnidad tipo;
 
     public UnidadAcademica(String codigo, String nombre, TipoUnidad tipo) {
-        throw new UnsupportedOperationException("Pendiente: UnidadAcademica - Damian Cunalata");
+        if (codigo == null || codigo.isBlank()) {
+            throw new IllegalArgumentException("El código de la unidad es obligatorio.");
+        }
+        if (tipo == null) {
+            throw new IllegalArgumentException("El tipo de la unidad es obligatorio.");
+        }
+        this.codigo = normalizar(codigo);
+        this.tipo = tipo;
+        this.nombre = validarNombre(nombre);
     }
 
     private static String validarNombre(String nombre) {
-        throw new UnsupportedOperationException("Pendiente: validarNombre - Damian Cunalata");
+        if (nombre == null || nombre.isBlank()) {
+            throw new IllegalArgumentException("El nombre de la unidad es obligatorio.");
+        }
+        return nombre.trim();
     }
 
-    /** Normaliza un código para compararlo: quita espacios y pasa a mayúsculas. */
+    
     public static String normalizar(String codigo) {
-        throw new UnsupportedOperationException("Pendiente: normalizar - Damian Cunalata");
+        return codigo == null ? "" : codigo.trim().toUpperCase();
     }
 
     public String getCodigo() {
-        throw new UnsupportedOperationException("Pendiente: getCodigo - Damian Cunalata");
+        return codigo;
     }
 
     public String getNombre() {
-        throw new UnsupportedOperationException("Pendiente: getNombre - Damian Cunalata");
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        throw new UnsupportedOperationException("Pendiente: setNombre - Damian Cunalata");
+        this.nombre = validarNombre(nombre);
     }
 
     public TipoUnidad getTipo() {
-        throw new UnsupportedOperationException("Pendiente: getTipo - Damian Cunalata");
+        return tipo;
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Pendiente: toString - Damian Cunalata");
+        return codigo + " - " + nombre + " [" + tipo + "]";
     }
 }

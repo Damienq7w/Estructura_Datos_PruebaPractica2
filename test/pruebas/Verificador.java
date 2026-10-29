@@ -12,7 +12,6 @@ public final class Verificador {
     private static int fallidas;
 
     private Verificador() {
-        throw new UnsupportedOperationException("Pendiente: Verificador - Damian Cunalata");
     }
 
     /** Bloque de prueba que puede lanzar cualquier excepción. */
@@ -22,31 +21,55 @@ public final class Verificador {
     }
 
     public static void caso(String nombre, Bloque cuerpo) {
-        throw new UnsupportedOperationException("Pendiente: caso - Damian Cunalata");
+        try {
+            cuerpo.ejecutar();
+            aprobadas++;
+            System.out.println("  [OK]    " + nombre);
+        } catch (Throwable t) {
+            fallidas++;
+            System.out.println("  [FALLA] " + nombre + " -> " + t);
+        }
     }
 
     public static void igual(Object esperado, Object obtenido, String mensaje) {
-        throw new UnsupportedOperationException("Pendiente: igual - Damian Cunalata");
+        if (!Objects.equals(esperado, obtenido)) {
+            throw new AssertionError(mensaje + " | esperado: " + esperado + " | obtenido: " + obtenido);
+        }
     }
 
     public static void cercano(double esperado, double obtenido, double tolerancia, String mensaje) {
-        throw new UnsupportedOperationException("Pendiente: cercano - Damian Cunalata");
+        if (Math.abs(esperado - obtenido) > tolerancia) {
+            throw new AssertionError(mensaje + " | esperado: " + esperado + " | obtenido: " + obtenido);
+        }
     }
 
     public static void verdadero(boolean condicion, String mensaje) {
-        throw new UnsupportedOperationException("Pendiente: verdadero - Damian Cunalata");
+        if (!condicion) {
+            throw new AssertionError(mensaje);
+        }
     }
 
     public static void falso(boolean condicion, String mensaje) {
-        throw new UnsupportedOperationException("Pendiente: falso - Damian Cunalata");
+        verdadero(!condicion, mensaje);
     }
 
     public static void lanza(Class<? extends Throwable> tipo, Bloque bloque, String mensaje) {
-        throw new UnsupportedOperationException("Pendiente: lanza - Damian Cunalata");
+        try {
+            bloque.ejecutar();
+        } catch (Throwable t) {
+            if (tipo.isInstance(t)) {
+                return;
+            }
+            throw new AssertionError(mensaje + " | se esperaba " + tipo.getSimpleName() + " y llegó " + t);
+        }
+        throw new AssertionError(mensaje + " | se esperaba " + tipo.getSimpleName() + " y no se lanzó nada");
     }
 
     /** Imprime el resumen y devuelve la cantidad de fallas (0 = todo pasó). */
     public static int resumen() {
-        throw new UnsupportedOperationException("Pendiente: resumen - Damian Cunalata");
+        System.out.println("----------------------------------------");
+        System.out.println("Pruebas aprobadas: " + aprobadas + " | fallidas: " + fallidas
+                + " | total: " + (aprobadas + fallidas));
+        return fallidas;
     }
 }
