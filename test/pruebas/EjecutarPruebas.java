@@ -4,10 +4,15 @@ package pruebas;
 public final class EjecutarPruebas {
 
     private EjecutarPruebas() {
-        throw new UnsupportedOperationException("Pendiente: EjecutarPruebas - Josue Camacho");
     }
 
     public static void main(String[] args) {
-        throw new UnsupportedOperationException("Pendiente: main - Josue Camacho");
+        PruebasArbolGeneralBase.ejecutar();
+        PruebasArbolGeneralOperaciones.ejecutar();
+        PruebasABBBasico.ejecutar();
+        PruebasABBEliminacion.ejecutar();
+        PruebasABBMetricas.ejecutar();
+        PruebasIntegracion.ejecutar();
+        System.exit(Verificador.resumen() == 0 ? 0 : 1);
     }
 }
