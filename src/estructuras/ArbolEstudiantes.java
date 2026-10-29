@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import modelo.Estudiante;
 
-/**
  * Árbol binario de búsqueda de estudiantes ordenado por matrícula.
  * Invariante: izquierda < nodo < derecha y sin matrículas repetidas.
  * Insertar, buscar y eliminar siguen un solo camino: O(h), con h la altura
  * (O(log n) si el árbol está equilibrado, O(n) si degeneró en cadena).
  */
+
 public class ArbolEstudiantes {
 
     private NodoEstudiante raiz;
@@ -25,38 +25,54 @@ public class ArbolEstudiantes {
 
     /** Inserta sin duplicados. Devuelve false si la matrícula ya existe. */
     public boolean insertar(Estudiante estudiante) {
+
         throw new UnsupportedOperationException("Pendiente: insertar - Mateo Chalco");
     }
 
     // Caso base: posición vacía, ahí se crea la hoja nueva.
+
+        if (estudiante == null) {
+            throw new IllegalArgumentException("No se puede insertar un estudiante nulo.");
+        }
+        if (buscarNodo(raiz, estudiante.getMatricula()) != null) {
+            return false; // duplicado: el árbol no cambia
+
+            return false; // duplicado: el arbol no cambia
+        }
+        raiz = insertar(raiz, estudiante);
+        return true;
+    }
+
+
+    // Caso base: posicion vacia, ahi se crea la hoja nueva.
     private NodoEstudiante insertar(NodoEstudiante nodo, Estudiante estudiante) {
         throw new UnsupportedOperationException("Pendiente: insertar - Mateo Chalco");
     }
 
-    /**
-     * Busca por matrícula y registra cuántas comparaciones hizo. null si no existe.
-     */
+
+    /* Busca por matrícula y registra cuántas comparaciones hizo. null si no existe. */
     public Estudiante buscar(int matricula) {
         throw new UnsupportedOperationException("Pendiente: buscar - Mateo Chalco");
     }
 
-    // Igual que buscarNodo, pero cuenta una comparación por cada nodo visitado.
+
+    // Igual que buscarNodo, pero cuenta una comparacion por cada nodo visitado.
     private NodoEstudiante buscarContando(NodoEstudiante nodo, int matricula) {
         throw new UnsupportedOperationException("Pendiente: buscarContando - Mateo Chalco");
     }
 
-    // Caso base: nodo nulo (no está) o matrícula encontrada. Descarta un subárbol
-    // por paso.
+    // Caso base: nodo nulo (no esta) o matricula encontrada. Descarta un subarbol por paso.
     protected NodoEstudiante buscarNodo(NodoEstudiante nodo, int matricula) {
         throw new UnsupportedOperationException("Pendiente: buscarNodo - Mateo Chalco");
     }
 
-    /** Comparaciones de la última llamada a buscar(). */
+    /** Comparaciones de la ultima llamada a buscar(). */
     public int getUltimasComparaciones() {
         throw new UnsupportedOperationException("Pendiente: getUltimasComparaciones - Mateo Chalco");
     }
 
-    /** Total de nodos (estudiantes). Árbol vacío = 0. O(n). */
+
+    /** Total de nodos (estudiantes). Arbol vacio = 0. O(n). */
     public int contar() {
         throw new UnsupportedOperationException("Pendiente: contar - Mateo Chalco");
     }
@@ -65,12 +81,12 @@ public class ArbolEstudiantes {
         throw new UnsupportedOperationException("Pendiente: contar - Mateo Chalco");
     }
 
-    /** Recorrido indicado. Árbol vacío = lista vacía. O(n). */
+    /** Recorrido indicado. Arbol vacio = lista vacia. O(n). */
     public ArrayList<Estudiante> recorrer(TipoRecorrido tipo) {
         throw new UnsupportedOperationException("Pendiente: recorrer - Mateo Chalco");
     }
 
-    /** Solo las matrículas del recorrido (útil para mostrar y para las pruebas). */
+    /** Solo las matriculas del recorrido (util para mostrar y para las pruebas). */
     public ArrayList<Integer> recorrerMatriculas(TipoRecorrido tipo) {
         throw new UnsupportedOperationException("Pendiente: recorrerMatriculas - Mateo Chalco");
     }
@@ -85,7 +101,7 @@ public class ArbolEstudiantes {
         throw new UnsupportedOperationException("Pendiente: inorden - Mateo Chalco");
     }
 
-    // Posorden: izquierdo, derecho, visita. La raíz sale al final.
+    // Posorden: izquierdo, derecho, visita. La raiz sale al final.
     private void posorden(NodoEstudiante nodo, ArrayList<Estudiante> lista) {
         throw new UnsupportedOperationException("Pendiente: posorden - Mateo Chalco");
     }
@@ -195,4 +211,5 @@ public class ArbolEstudiantes {
         return esABBValido(nodo.getIzquierdo(), minimo, m)
                 && esABBValido(nodo.getDerecho(), m, maximo);
     }
+
 }

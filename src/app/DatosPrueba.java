@@ -1,5 +1,8 @@
 package app;
 
+import estructuras.ArbolGeneral;
+import estructuras.ArbolEstudiantes;
+import modelo.Estudiante;
 import estructuras.ArbolEstudiantes;
 import estructuras.ArbolGeneral;
 import modelo.TipoUnidad;
@@ -27,7 +30,8 @@ public final class DatosPrueba {
         return arbol;
     }
 
-    
+
+    /** Orden de inserción obligatorio del enunciado. */
     public static final int[] MATRICULAS = {50, 30, 70, 20, 40, 60, 80, 35, 45, 65, 75, 85};
 
     private static final String[] NOMBRES = {
@@ -39,6 +43,11 @@ public final class DatosPrueba {
 
     /** ABB con las 12 matrículas insertadas en el orden pedido. */
     public static ArbolEstudiantes cargarEstudiantes() {
+        ArbolEstudiantes abb = new ArbolEstudiantes();
+        for (int i = 0; i < MATRICULAS.length; i++) {
+            abb.insertar(new Estudiante(MATRICULAS[i], NOMBRES[i], PROMEDIOS[i]));
+        }
+        return abb;
         throw new UnsupportedOperationException("Pendiente: cargarEstudiantes - Mateo Chalco");
     }
 }
