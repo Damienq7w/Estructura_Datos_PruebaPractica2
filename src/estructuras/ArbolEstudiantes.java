@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import modelo.Estudiante;
 
 /**
- * Árbol binario de búsqueda de estudiantes ordenado por matrícula.
- * Invariante: izquierda < nodo < derecha y sin matrículas repetidas.
+ * Arbol binario de busqueda de estudiantes ordenado por matricula.
+ * Invariante: izquierda < nodo < derecha y sin matriculas repetidas.
  * Insertar, buscar y eliminar siguen un solo camino: O(h), con h la altura
- * (O(log n) si el árbol está equilibrado, O(n) si degeneró en cadena).
+ * (O(log n) si el arbol esta equilibrado, O(n) si degenero en cadena).
  */
 public class ArbolEstudiantes {
 
@@ -16,148 +16,160 @@ public class ArbolEstudiantes {
     private int ultimasComparaciones;
 
     public boolean estaVacio() {
-        throw new UnsupportedOperationException("Pendiente: estaVacio - Mateo Chalco");
+        return raiz == null;
     }
 
     public NodoEstudiante getRaiz() {
-        throw new UnsupportedOperationException("Pendiente: getRaiz - Mateo Chalco");
+        return raiz;
     }
 
-    /** Inserta sin duplicados. Devuelve false si la matrícula ya existe. */
+    /** Inserta sin duplicados. Devuelve false si la matricula ya existe. */
     public boolean insertar(Estudiante estudiante) {
-        throw new UnsupportedOperationException("Pendiente: insertar - Mateo Chalco");
+        if (estudiante == null) {
+            throw new IllegalArgumentException("No se puede insertar un estudiante nulo.");
+        }
+        if (buscarNodo(raiz, estudiante.getMatricula()) != null) {
+            return false; // duplicado: el arbol no cambia
+        }
+        raiz = insertar(raiz, estudiante);
+        return true;
     }
 
-    // Caso base: posición vacía, ahí se crea la hoja nueva.
+    // Caso base: posicion vacia, ahi se crea la hoja nueva.
     private NodoEstudiante insertar(NodoEstudiante nodo, Estudiante estudiante) {
-        throw new UnsupportedOperationException("Pendiente: insertar - Mateo Chalco");
+        if (nodo == null) {
+            return new NodoEstudiante(estudiante);
+        }
+        if (estudiante.getMatricula() < nodo.getMatricula()) {
+            nodo.setIzquierdo(insertar(nodo.getIzquierdo(), estudiante));
+        } else {
+            nodo.setDerecho(insertar(nodo.getDerecho(), estudiante));
+        }
+        return nodo;
     }
 
-    /** Busca por matrícula y registra cuántas comparaciones hizo. null si no existe. */
+    /** Busca por matricula y registra cuantas comparaciones hizo. null si no existe. */
     public Estudiante buscar(int matricula) {
-        throw new UnsupportedOperationException("Pendiente: buscar - Mateo Chalco");
+        ultimasComparaciones = 0;
+        NodoEstudiante nodo = buscarContando(raiz, matricula);
+        return nodo == null ? null : nodo.getDato();
     }
 
-    // Igual que buscarNodo, pero cuenta una comparación por cada nodo visitado.
+    // Igual que buscarNodo, pero cuenta una comparacion por cada nodo visitado.
     private NodoEstudiante buscarContando(NodoEstudiante nodo, int matricula) {
-        throw new UnsupportedOperationException("Pendiente: buscarContando - Mateo Chalco");
+        if (nodo == null) {
+            return null;
+        }
+        ultimasComparaciones++;
+        if (matricula == nodo.getMatricula()) {
+            return nodo;
+        }
+        if (matricula < nodo.getMatricula()) {
+            return buscarContando(nodo.getIzquierdo(), matricula);
+        }
+        return buscarContando(nodo.getDerecho(), matricula);
     }
 
-    // Caso base: nodo nulo (no está) o matrícula encontrada. Descarta un subárbol por paso.
+    // Caso base: nodo nulo (no esta) o matricula encontrada. Descarta un subarbol por paso.
     protected NodoEstudiante buscarNodo(NodoEstudiante nodo, int matricula) {
-        throw new UnsupportedOperationException("Pendiente: buscarNodo - Mateo Chalco");
+        if (nodo == null || matricula == nodo.getMatricula()) {
+            return nodo;
+        }
+        if (matricula < nodo.getMatricula()) {
+            return buscarNodo(nodo.getIzquierdo(), matricula);
+        }
+        return buscarNodo(nodo.getDerecho(), matricula);
     }
 
-    /** Comparaciones de la última llamada a buscar(). */
+    /** Comparaciones de la ultima llamada a buscar(). */
     public int getUltimasComparaciones() {
-        throw new UnsupportedOperationException("Pendiente: getUltimasComparaciones - Mateo Chalco");
+        return ultimasComparaciones;
     }
 
-    /** Total de nodos (estudiantes). Árbol vacío = 0. O(n). */
+    /** Total de nodos (estudiantes). Arbol vacio = 0. O(n). */
     public int contar() {
-        throw new UnsupportedOperationException("Pendiente: contar - Mateo Chalco");
+        return contar(raiz);
     }
 
     private int contar(NodoEstudiante nodo) {
-        throw new UnsupportedOperationException("Pendiente: contar - Mateo Chalco");
+        if (nodo == null) {
+            return 0;
+        }
+        return 1 + contar(nodo.getIzquierdo()) + contar(nodo.getDerecho());
     }
 
-    /** Recorrido indicado. Árbol vacío = lista vacía. O(n). */
+    /** Recorrido indicado. Arbol vacio = lista vacia. O(n). */
     public ArrayList<Estudiante> recorrer(TipoRecorrido tipo) {
-        throw new UnsupportedOperationException("Pendiente: recorrer - Mateo Chalco");
+        if (tipo == null) {
+            throw new IllegalArgumentException("Debe indicar un tipo de recorrido.");
+        }
+        ArrayList<Estudiante> resultado = new ArrayList<>();
+        switch (tipo) {
+            case PREORDEN:
+                preorden(raiz, resultado);
+                break;
+            case INORDEN:
+                inorden(raiz, resultado);
+                break;
+            default:
+                posorden(raiz, resultado);
+                break;
+        }
+        return resultado;
     }
 
-    /** Solo las matrículas del recorrido (útil para mostrar y para las pruebas). */
+    /** Solo las matriculas del recorrido (util para mostrar y para las pruebas). */
     public ArrayList<Integer> recorrerMatriculas(TipoRecorrido tipo) {
-        throw new UnsupportedOperationException("Pendiente: recorrerMatriculas - Mateo Chalco");
+        ArrayList<Integer> matriculas = new ArrayList<>();
+        for (Estudiante e : recorrer(tipo)) {
+            matriculas.add(e.getMatricula());
+        }
+        return matriculas;
     }
 
     // Preorden: visita, izquierdo, derecho. Caso base: nodo nulo.
     private void preorden(NodoEstudiante nodo, ArrayList<Estudiante> lista) {
-        throw new UnsupportedOperationException("Pendiente: preorden - Mateo Chalco");
+        if (nodo == null) {
+            return;
+        }
+        lista.add(nodo.getDato());
+        preorden(nodo.getIzquierdo(), lista);
+        preorden(nodo.getDerecho(), lista);
     }
 
     // Inorden: izquierdo, visita, derecho. En un ABB sale ordenado.
     private void inorden(NodoEstudiante nodo, ArrayList<Estudiante> lista) {
-        throw new UnsupportedOperationException("Pendiente: inorden - Mateo Chalco");
+        if (nodo == null) {
+            return;
+        }
+        inorden(nodo.getIzquierdo(), lista);
+        lista.add(nodo.getDato());
+        inorden(nodo.getDerecho(), lista);
     }
 
-    // Posorden: izquierdo, derecho, visita. La raíz sale al final.
+    // Posorden: izquierdo, derecho, visita. La raiz sale al final.
     private void posorden(NodoEstudiante nodo, ArrayList<Estudiante> lista) {
-        throw new UnsupportedOperationException("Pendiente: posorden - Mateo Chalco");
+        if (nodo == null) {
+            return;
+        }
+        posorden(nodo.getIzquierdo(), lista);
+        posorden(nodo.getDerecho(), lista);
+        lista.add(nodo.getDato());
     }
 
     /**
-     * Modifica nombre y promedio SIN tocar la matrícula (es la clave del ABB).
-     * Valida los dos datos antes de cambiar nada. false si la matrícula no existe.
+     * Modifica nombre y promedio SIN tocar la matricula (es la clave del ABB).
+     * Valida los dos datos antes de cambiar nada. false si la matricula no existe.
      */
     public boolean modificar(int matricula, String nuevoNombre, double nuevoPromedio) {
-        throw new UnsupportedOperationException("Pendiente: modificar - Luis Silva");
-    }
-
-    /** Elimina por matrícula (hoja, un hijo o dos hijos). false si no existe. O(h). */
-    public boolean eliminar(int matricula) {
-        throw new UnsupportedOperationException("Pendiente: eliminar - Luis Silva");
-    }
-
-    // Devuelve la raíz del subárbol ya reconectada; el padre actualiza su enlace con ella.
-    private NodoEstudiante eliminar(NodoEstudiante nodo, int matricula) {
-        throw new UnsupportedOperationException("Pendiente: eliminar - Luis Silva");
-    }
-
-    // Baja siempre por la izquierda. Caso base: no hay hijo izquierdo.
-    protected NodoEstudiante minimoNodo(NodoEstudiante nodo) {
-        throw new UnsupportedOperationException("Pendiente: minimoNodo - Luis Silva");
-    }
-
-    /** Altura en aristas: vacío = -1, un solo nodo = 0. O(n). */
-    public int altura() {
-        throw new UnsupportedOperationException("Pendiente: altura - Sara Tacuri");
-    }
-
-    private int altura(NodoEstudiante nodo) {
-        throw new UnsupportedOperationException("Pendiente: altura - Sara Tacuri");
-    }
-
-    /** Cantidad de hojas. Vacío = 0. O(n). */
-    public int contarHojas() {
-        throw new UnsupportedOperationException("Pendiente: contarHojas - Sara Tacuri");
-    }
-
-    private int contarHojas(NodoEstudiante nodo) {
-        throw new UnsupportedOperationException("Pendiente: contarHojas - Sara Tacuri");
-    }
-
-    /** Estudiante con la menor matrícula; null si está vacío. O(h). */
-    public Estudiante minimo() {
-        throw new UnsupportedOperationException("Pendiente: minimo - Sara Tacuri");
-    }
-
-    /** Estudiante con la mayor matrícula; null si está vacío. O(h). */
-    public Estudiante maximo() {
-        throw new UnsupportedOperationException("Pendiente: maximo - Sara Tacuri");
-    }
-
-    private NodoEstudiante maximoNodo(NodoEstudiante nodo) {
-        throw new UnsupportedOperationException("Pendiente: maximoNodo - Sara Tacuri");
-    }
-
-    /** Promedio aritmético de los promedios registrados. Vacío = 0.0. O(n). */
-    public double promedioGeneral() {
-        throw new UnsupportedOperationException("Pendiente: promedioGeneral - Sara Tacuri");
-    }
-
-    private double sumarPromedios(NodoEstudiante nodo) {
-        throw new UnsupportedOperationException("Pendiente: sumarPromedios - Sara Tacuri");
-    }
-
-    /** Verifica la invariante del ABB con límites (min, max) en cada subárbol. O(n). */
-    public boolean esABBValido() {
-        throw new UnsupportedOperationException("Pendiente: esABBValido - Sara Tacuri");
-    }
-
-    // Cada nodo debe estar estrictamente entre los límites heredados de sus ancestros.
-    private boolean esABBValido(NodoEstudiante nodo, long minimo, long maximo) {
-        throw new UnsupportedOperationException("Pendiente: esABBValido - Sara Tacuri");
+        NodoEstudiante nodo = buscarNodo(raiz, matricula);
+        if (nodo == null) {
+            return false;
+        }
+        Estudiante.validarNombre(nuevoNombre);     // lanza IllegalArgumentException
+        Estudiante.validarPromedio(nuevoPromedio); // antes de modificar el objeto real
+        nodo.getDato().setNombre(nuevoNombre);
+        nodo.getDato().setPromedio(nuevoPromedio);
+        return true;
     }
 }
