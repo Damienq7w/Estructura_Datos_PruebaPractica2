@@ -3,8 +3,8 @@ package estructuras;
 import modelo.UnidadAcademica;
 
 /**
- * Nodo del árbol binario que resulta de transformar el árbol general.
- * Ojo: el enlace derecho NO es un hijo, es el siguiente hermano en el árbol original.
+ * Nodo del arbol binario que resulta de transformar el arbol general.
+ * Ojo: el enlace derecho NO es un hijo, es el siguiente hermano en el arbol original.
  */
 public class NodoBinarioUnidad {
 
@@ -13,26 +13,26 @@ public class NodoBinarioUnidad {
     private NodoBinarioUnidad derecho;   // siguiente hermano
 
     public NodoBinarioUnidad(UnidadAcademica dato) {
-        throw new UnsupportedOperationException("Pendiente: NodoBinarioUnidad - Joel Tisalema");
+        this.dato = dato;
     }
 
     public UnidadAcademica getDato() {
-        throw new UnsupportedOperationException("Pendiente: getDato - Joel Tisalema");
+        return dato;
     }
 
     public NodoBinarioUnidad getIzquierdo() {
-        throw new UnsupportedOperationException("Pendiente: getIzquierdo - Joel Tisalema");
+        return izquierdo;
     }
 
     public void setIzquierdo(NodoBinarioUnidad izquierdo) {
-        throw new UnsupportedOperationException("Pendiente: setIzquierdo - Joel Tisalema");
+        this.izquierdo = izquierdo;
     }
 
     public NodoBinarioUnidad getDerecho() {
-        throw new UnsupportedOperationException("Pendiente: getDerecho - Joel Tisalema");
+        return derecho;
     }
 
     public void setDerecho(NodoBinarioUnidad derecho) {
-        throw new UnsupportedOperationException("Pendiente: setDerecho - Joel Tisalema");
+        this.derecho = derecho;
     }
 }
