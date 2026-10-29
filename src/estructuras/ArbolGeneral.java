@@ -1,7 +1,6 @@
 package estructuras;
 
 import java.util.List;
-
 import modelo.TipoUnidad;
 import modelo.UnidadAcademica;
 
@@ -15,16 +14,20 @@ public class ArbolGeneral {
     private NodoUnidad raiz;
 
     public boolean estaVacio() {
-        throw new UnsupportedOperationException("Pendiente: estaVacio - Damian Cunalata");
+        return raiz == null;
     }
 
     public NodoUnidad getRaiz() {
-        throw new UnsupportedOperationException("Pendiente: getRaiz - Damian Cunalata");
+        return raiz;
     }
 
     /** Crea la raíz única. Se rechaza si ya existe una raíz o si no es de tipo UNIVERSIDAD. */
     public boolean crearRaiz(UnidadAcademica unidad) {
-        throw new UnsupportedOperationException("Pendiente: crearRaiz - Damian Cunalata");
+        if (raiz != null || unidad == null || unidad.getTipo() != TipoUnidad.UNIVERSIDAD) {
+            return false;
+        }
+        raiz = new NodoUnidad(unidad);
+        return true;
     }
 
     /**
@@ -34,21 +37,47 @@ public class ArbolGeneral {
      * siempre se cuelga de uno existente, no se pueden formar ciclos.
      */
     public boolean agregar(String codigoPadre, UnidadAcademica unidad) {
-        throw new UnsupportedOperationException("Pendiente: agregar - Damian Cunalata");
+        if (unidad == null || raiz == null) {
+            return false;
+        }
+        if (existe(unidad.getCodigo())) {
+            return false; // código único
+        }
+        NodoUnidad padre = buscar(codigoPadre);
+        if (padre == null) {
+            return false; // padre inexistente
+        }
+        return padre.agregarHijo(new NodoUnidad(unidad)); // valida la jerarquía
     }
 
     /** Busca por código (sin importar espacios ni mayúsculas). Devuelve null si no existe. */
     public NodoUnidad buscar(String codigo) {
-        throw new UnsupportedOperationException("Pendiente: buscar - Damian Cunalata");
+        String clave = UnidadAcademica.normalizar(codigo);
+        if (clave.isEmpty()) {
+            return null;
+        }
+        return buscar(raiz, clave);
     }
 
     // Caso base: nodo nulo (no está) o código encontrado. Si no, prueba con cada hijo.
     private NodoUnidad buscar(NodoUnidad nodo, String clave) {
-        throw new UnsupportedOperationException("Pendiente: buscar - Damian Cunalata");
+        if (nodo == null) {
+            return null;
+        }
+        if (nodo.getCodigo().equals(clave)) {
+            return nodo;
+        }
+        for (NodoUnidad hijo : nodo.getHijos()) {
+            NodoUnidad encontrado = buscar(hijo, clave);
+            if (encontrado != null) {
+                return encontrado;
+            }
+        }
+        return null;
     }
 
     public boolean existe(String codigo) {
-        throw new UnsupportedOperationException("Pendiente: existe - Damian Cunalata");
+        return buscar(codigo) != null;
     }
 
     /** Nivel (profundidad en aristas) de una unidad; la raíz está en el nivel 0. -1 si no existe. */
