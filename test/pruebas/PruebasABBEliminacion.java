@@ -37,7 +37,7 @@ public final class PruebasABBEliminacion {
             falso(abb.modificar(99, "Nadie", 5.0), "99 no existe");
             lanza(IllegalArgumentException.class, () -> abb.modificar(35, "Nombre valido", 15.0),
                     "promedio fuera de rango");
-            igual("Hugo Sanchez", abb.buscar(35).getNombre(), "el nombre no se cambio a medias");
+            igual("Hugo Sánchez", abb.buscar(35).getNombre(), "el nombre no se cambio a medias");
         });
 
         caso("Inorden antes y despues de eliminar 20 (hoja), 60 (un hijo) y 70 (dos hijos)", () -> {

@@ -3,8 +3,6 @@ package app;
 import estructuras.ArbolGeneral;
 import estructuras.ArbolEstudiantes;
 import modelo.Estudiante;
-import estructuras.ArbolEstudiantes;
-import estructuras.ArbolGeneral;
 import modelo.TipoUnidad;
 import modelo.UnidadAcademica;
 
@@ -12,7 +10,6 @@ import modelo.UnidadAcademica;
 public final class DatosPrueba {
 
     private DatosPrueba() {
-        throw new UnsupportedOperationException("Pendiente: DatosPrueba - Damian Cunalata");
     }
 
     /** UTA → FISEI, FCHE, FCS; FISEI → SOFTWARE, TI; SOFTWARE → 3A, 3B; TI → 4A. */
@@ -29,7 +26,6 @@ public final class DatosPrueba {
         arbol.agregar("TI", new UnidadAcademica("4A", "TI Cuarto A", TipoUnidad.PARALELO));
         return arbol;
     }
-
 
     /** Orden de inserción obligatorio del enunciado. */
     public static final int[] MATRICULAS = {50, 30, 70, 20, 40, 60, 80, 35, 45, 65, 75, 85};
@@ -48,6 +44,5 @@ public final class DatosPrueba {
             abb.insertar(new Estudiante(MATRICULAS[i], NOMBRES[i], PROMEDIOS[i]));
         }
         return abb;
-        throw new UnsupportedOperationException("Pendiente: cargarEstudiantes - Mateo Chalco");
     }
 }

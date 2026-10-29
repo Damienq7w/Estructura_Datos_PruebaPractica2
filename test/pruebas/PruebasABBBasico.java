@@ -66,19 +66,5 @@ public final class PruebasABBBasico {
     public static void main(String[] args) {
         ejecutar();
         System.exit(Verificador.resumen() == 0 ? 0 : 1);
-
-public final class PruebasABBBasico {
-
-    private PruebasABBBasico() {
-        throw new UnsupportedOperationException("Pendiente: PruebasABBBasico - Mateo Chalco");
-    }
-
-    public static void ejecutar() {
-        throw new UnsupportedOperationException("Pendiente: ejecutar - Mateo Chalco");
-    }
-
-    public static void main(String[] args) {
-        throw new UnsupportedOperationException("Pendiente: main - Mateo Chalco");
-
     }
 }
