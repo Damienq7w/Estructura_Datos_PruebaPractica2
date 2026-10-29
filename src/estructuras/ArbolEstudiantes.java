@@ -172,4 +172,46 @@ public class ArbolEstudiantes {
         nodo.getDato().setPromedio(nuevoPromedio);
         return true;
     }
+
+    /** Elimina por matricula (hoja, un hijo o dos hijos). false si no existe. O(h). */
+    public boolean eliminar(int matricula) {
+        if (buscarNodo(raiz, matricula) == null) {
+            return false;
+        }
+        raiz = eliminar(raiz, matricula);
+        return true;
+    }
+
+    // Devuelve la raiz del subarbol ya reconectada; el padre actualiza su enlace con ella.
+    private NodoEstudiante eliminar(NodoEstudiante nodo, int matricula) {
+        if (nodo == null) {
+            return null; // caso base
+        }
+        if (matricula < nodo.getMatricula()) {
+            nodo.setIzquierdo(eliminar(nodo.getIzquierdo(), matricula));
+        } else if (matricula > nodo.getMatricula()) {
+            nodo.setDerecho(eliminar(nodo.getDerecho(), matricula));
+        } else {
+            if (nodo.getIzquierdo() == null) {
+                return nodo.getDerecho();   // hoja o solo hijo derecho
+            }
+            if (nodo.getDerecho() == null) {
+                return nodo.getIzquierdo(); // solo hijo izquierdo
+            }
+            // Dos hijos: el sucesor inorden (menor del subarbol derecho) es mayor que
+            // todo el lado izquierdo y menor que el resto del derecho, asi el orden se mantiene.
+            NodoEstudiante sucesor = minimoNodo(nodo.getDerecho());
+            nodo.setDato(sucesor.getDato());
+            nodo.setDerecho(eliminar(nodo.getDerecho(), sucesor.getMatricula()));
+        }
+        return nodo;
+    }
+
+    // Baja siempre por la izquierda. Caso base: no hay hijo izquierdo.
+    protected NodoEstudiante minimoNodo(NodoEstudiante nodo) {
+        if (nodo.getIzquierdo() == null) {
+            return nodo;
+        }
+        return minimoNodo(nodo.getIzquierdo());
+    }
 }
