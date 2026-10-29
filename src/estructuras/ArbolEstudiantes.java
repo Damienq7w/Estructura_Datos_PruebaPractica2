@@ -4,12 +4,6 @@ import java.util.ArrayList;
 
 import modelo.Estudiante;
 
-/**
- * Arbol binario de busqueda de estudiantes ordenado por matricula.
- * Invariante: izquierda < nodo < derecha y sin matriculas repetidas.
- * Insertar, buscar y eliminar siguen un solo camino: O(h), con h la altura
- * (O(log n) si el arbol esta equilibrado, O(n) si degenero en cadena).
- */
 public class ArbolEstudiantes {
 
     private NodoEstudiante raiz;
@@ -23,17 +17,20 @@ public class ArbolEstudiantes {
         return raiz;
     }
 
-    /** Inserta sin duplicados. Devuelve false si la matricula ya existe. */
+    /** Inserta sin duplicados. Devuelve false si la matrícula ya existe. */
     public boolean insertar(Estudiante estudiante) {
         if (estudiante == null) {
             throw new IllegalArgumentException("No se puede insertar un estudiante nulo.");
         }
         if (buscarNodo(raiz, estudiante.getMatricula()) != null) {
+            return false; // duplicado: el árbol no cambia
+
             return false; // duplicado: el arbol no cambia
         }
         raiz = insertar(raiz, estudiante);
         return true;
     }
+
 
     // Caso base: posicion vacia, ahi se crea la hoja nueva.
     private NodoEstudiante insertar(NodoEstudiante nodo, Estudiante estudiante) {
@@ -48,6 +45,7 @@ public class ArbolEstudiantes {
         return nodo;
     }
 
+
     /** Busca por matricula y registra cuantas comparaciones hizo. null si no existe. */
     public Estudiante buscar(int matricula) {
         ultimasComparaciones = 0;
@@ -55,7 +53,9 @@ public class ArbolEstudiantes {
         return nodo == null ? null : nodo.getDato();
     }
 
+
     // Igual que buscarNodo, pero cuenta una comparacion por cada nodo visitado.
+
     private NodoEstudiante buscarContando(NodoEstudiante nodo, int matricula) {
         if (nodo == null) {
             return null;
@@ -71,6 +71,7 @@ public class ArbolEstudiantes {
     }
 
     // Caso base: nodo nulo (no esta) o matricula encontrada. Descarta un subarbol por paso.
+
     protected NodoEstudiante buscarNodo(NodoEstudiante nodo, int matricula) {
         if (nodo == null || matricula == nodo.getMatricula()) {
             return nodo;
@@ -81,12 +82,15 @@ public class ArbolEstudiantes {
         return buscarNodo(nodo.getDerecho(), matricula);
     }
 
+
     /** Comparaciones de la ultima llamada a buscar(). */
     public int getUltimasComparaciones() {
         return ultimasComparaciones;
     }
 
+
     /** Total de nodos (estudiantes). Arbol vacio = 0. O(n). */
+
     public int contar() {
         return contar(raiz);
     }
@@ -98,7 +102,9 @@ public class ArbolEstudiantes {
         return 1 + contar(nodo.getIzquierdo()) + contar(nodo.getDerecho());
     }
 
+
     /** Recorrido indicado. Arbol vacio = lista vacia. O(n). */
+
     public ArrayList<Estudiante> recorrer(TipoRecorrido tipo) {
         if (tipo == null) {
             throw new IllegalArgumentException("Debe indicar un tipo de recorrido.");
@@ -118,7 +124,9 @@ public class ArbolEstudiantes {
         return resultado;
     }
 
+
     /** Solo las matriculas del recorrido (util para mostrar y para las pruebas). */
+
     public ArrayList<Integer> recorrerMatriculas(TipoRecorrido tipo) {
         ArrayList<Integer> matriculas = new ArrayList<>();
         for (Estudiante e : recorrer(tipo)) {
@@ -147,7 +155,9 @@ public class ArbolEstudiantes {
         inorden(nodo.getDerecho(), lista);
     }
 
+
     // Posorden: izquierdo, derecho, visita. La raiz sale al final.
+
     private void posorden(NodoEstudiante nodo, ArrayList<Estudiante> lista) {
         if (nodo == null) {
             return;
@@ -214,4 +224,5 @@ public class ArbolEstudiantes {
         }
         return minimoNodo(nodo.getIzquierdo());
     }
+
 }
