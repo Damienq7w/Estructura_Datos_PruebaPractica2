@@ -36,26 +36,18 @@ public class ArbolGeneral {
      * o relacion padre–hijo invalida. Como cada codigo es unico y el nodo nuevo
      * siempre se cuelga de uno existente, no se pueden formar ciclos.
      */
-    public boolean agregar(String codigoPadre, UnidadAcademica unidad) {
+   public boolean agregar(String codigoPadre, UnidadAcademica unidad) {
         if (unidad == null || raiz == null) {
             return false;
         }
         if (existe(unidad.getCodigo())) {
-
             return false; // codigo unico
-
-            return false; // código único
-
         }
         NodoUnidad padre = buscar(codigoPadre);
         if (padre == null) {
             return false; // padre inexistente
         }
-
         return padre.agregarHijo(new NodoUnidad(unidad)); // valida la jerarquia
-
-        return padre.agregarHijo(new NodoUnidad(unidad)); // valida la jerarquía
-
     }
 
     /** Busca por codigo (sin importar espacios ni mayusculas). Devuelve null si no existe. */
