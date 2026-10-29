@@ -12,39 +12,52 @@ public class Estudiante {
     private double promedio;
 
     public Estudiante(int matricula, String nombre, double promedio) {
-        throw new UnsupportedOperationException("Pendiente: Estudiante - Damian Cunalata");
+        if (matricula <= 0) {
+            throw new IllegalArgumentException("La matrícula debe ser un entero positivo.");
+        }
+        validarNombre(nombre);
+        validarPromedio(promedio);
+        this.matricula = matricula;
+        this.nombre = nombre.trim();
+        this.promedio = promedio;
     }
 
     public static void validarNombre(String nombre) {
-        throw new UnsupportedOperationException("Pendiente: validarNombre - Damian Cunalata");
+        if (nombre == null || nombre.isBlank()) {
+            throw new IllegalArgumentException("El nombre del estudiante es obligatorio.");
+        }
     }
 
     public static void validarPromedio(double promedio) {
-        throw new UnsupportedOperationException("Pendiente: validarPromedio - Damian Cunalata");
+        if (Double.isNaN(promedio) || promedio < 0 || promedio > 10) {
+            throw new IllegalArgumentException("El promedio debe estar entre 0 y 10.");
+        }
     }
 
     public int getMatricula() {
-        throw new UnsupportedOperationException("Pendiente: getMatricula - Damian Cunalata");
+        return matricula;
     }
 
     public String getNombre() {
-        throw new UnsupportedOperationException("Pendiente: getNombre - Damian Cunalata");
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        throw new UnsupportedOperationException("Pendiente: setNombre - Damian Cunalata");
+        validarNombre(nombre);
+        this.nombre = nombre.trim();
     }
 
     public double getPromedio() {
-        throw new UnsupportedOperationException("Pendiente: getPromedio - Damian Cunalata");
+        return promedio;
     }
 
     public void setPromedio(double promedio) {
-        throw new UnsupportedOperationException("Pendiente: setPromedio - Damian Cunalata");
+        validarPromedio(promedio);
+        this.promedio = promedio;
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Pendiente: toString - Damian Cunalata");
+        return matricula + " - " + nombre + " (" + promedio + ")";
     }
 }
